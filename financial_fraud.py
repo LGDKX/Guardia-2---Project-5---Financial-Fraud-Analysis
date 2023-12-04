@@ -1,26 +1,14 @@
-##################################################################
-# Importing pandas as pd in order to manipulate and explore data #
-##################################################################
+#########################################################################################
+#             Importing pandas as pd in order to manipulate and explore data            #
+#         Import train_test_split from Scikit Learn in order to break data sets         #
+#        Import MAE from Scikit Learn in order to assure the quality of the model       #
+#             Import LabelEncoder from Scikit Learn in order to encode data             #
+# Import DecisionTreeClassifier from Scikit Learn in order to manipulate Decision Tree  #
+#########################################################################################
 import pandas as pd
-
-#########################################################################
-# Import train_test_split from Scikit Learn in order to break data sets #
-#########################################################################
 from sklearn.model_selection import train_test_split
-
-############################################################################
-# Import MAE from Scikit Learn in order to assure the quality of the model #
-############################################################################
 from sklearn.metrics import mean_absolute_error
-
-#################################################################
-# Import LabelEncoder from Scikit Learn in order to encode data #
-#################################################################
 from sklearn.preprocessing import LabelEncoder
-
-########################################################################################
-# Import DecisionTreeClassifier from Scikit Learn in order to manipulate Decision Tree #
-########################################################################################
 from sklearn import tree
 
 # Save filepath for easier access
@@ -94,11 +82,11 @@ def main():
             model_choices()
             if choice == "1":
                 decision_tree_classifier_model()
-        if choice == "2":
+        elif choice == "2":
             # Choosing the Data Set to use
             print("Please input the name of the Data Set (without file extension")
             new_data_set = input("Your Data Set name : ") + ".csv"
-        if choice == "3":
+        elif choice == "3":
             # Choosing the number of entry for the new Data Set
             print("How much entry do you want ?")
             entry = int(input("Your choice : "))
@@ -107,7 +95,7 @@ def main():
                 print("Invalid number")
             else:
                 print("Function in construction")
-        if choice == "4":
+        else:
             # Quit the function
             break
 
