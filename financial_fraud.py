@@ -1,11 +1,17 @@
 #########################################################################################
 #             Importing pandas as pd in order to manipulate and explore data            #
+#                     Import random in order to generate random data                    #
+#                   Import string in order to manipulate data strings                   #
+#                  Import os in order to save files in another folder                   #
 #         Import train_test_split from Scikit Learn in order to break data sets         #
 #        Import MAE from Scikit Learn in order to assure the quality of the model       #
 #             Import LabelEncoder from Scikit Learn in order to encode data             #
 # Import DecisionTreeClassifier from Scikit Learn in order to manipulate Decision Tree  #
 #########################################################################################
 import pandas as pd
+import random
+import string
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
@@ -68,6 +74,35 @@ def decision_tree_classifier_model():
     print(mae)
 
 
+def generate_random_data(entry):
+    steps = list(range(1, entry + 1))
+    types = ["PAYMENT", "TRANSFER", "CASH_OUT"]
+    amounts = [round(random.uniform(1, 10000), 2) for _ in range(entry)]
+    names = [''.join(random.choices(string.ascii_uppercase, k=10)) for _ in range(entry)]
+    orig_balances = [round(random.uniform(1, 100000), 2) for _ in range(entry)]
+    dest_names = [''.join(random.choices(string.ascii_uppercase, k=10)) for _ in range(entry)]
+    dest_balances = [round(random.uniform(1, 100000), 2) for _ in range(entry)]
+    is_fraud = [random.choice([0, 1]) for _ in range(entry)]
+    is_flagged_fraud = [random.choice([0, 1]) for _ in range(entry)]
+
+    data = {
+        'step': steps,
+        'type': [random.choice(types) for _ in range(entry)],
+        'amount': amounts,
+        'nameOrig': names,
+        'oldbalanceOrg': orig_balances,
+        'newbalanceOrig': [ob - amt for ob, amt in zip(orig_balances, amounts)],
+        'nameDest': dest_names,
+        'oldbalanceDest': dest_balances,
+        'newbalanceDest': [nb + amt for nb, amt in zip(dest_balances, amounts)],
+        'isFraud': is_fraud,
+        'isFlaggedFraud': is_flagged_fraud
+    }
+
+    df = pd.DataFrame(data)
+    return df
+
+
 def main():
     while True:
         # Main menu
@@ -94,7 +129,14 @@ def main():
                 # Error message
                 print("Invalid number")
             else:
-                print("Function in construction")
+                df = generate_random_data(entry)
+
+                save_directory = './data_set'
+
+                # Save the DataFrame to a CSV file in the specified directory
+                file_path = os.path.join(save_directory, 'random_data.csv')
+                df.to_csv(file_path, index=False)
+                print(f"CSV file created successfully at {file_path}.")
         else:
             # Quit the function
             break
