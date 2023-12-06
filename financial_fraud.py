@@ -15,7 +15,7 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
-from sklearn.linear_model import Ridge
+from sklearn import tree
 
 
 def data_set_choices():
@@ -122,7 +122,7 @@ def files_configuration(data_set, training):
 
 def model(training, train_X, train_y, val_X, val_y, X, y):
     # Define model. Specify a number for random_state to ensure same results each run
-    financial_fraud_model = (random_state=1)
+    financial_fraud_model = tree.DecisionTreeClassifier(random_state=1)
 
     if training:
         # Fit model
