@@ -17,28 +17,22 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
 from sklearn import tree
 
-# Save filepath for easier access
-financial_fraud_file_path = 'data_set/financial_fraud.csv'
 
-# Read the data and save it into a DataFrame titled financial_fraud_data
-financial_fraud_data = pd.read_csv(financial_fraud_file_path)
+def data_set_choices():
+    print("Which Data Set do you wish to use ?")
+    print("1 - financial_fraud (The complete Data Set.)")
+    print("2 - financial_fraud_reduced (The Data Set that have been reduced.)")
+    print("3 - financial_fraud_incomplete (The Data Set containing error which have been cleaned.)")
+    print("4 - random_data (A previously randomly generated Data Set. This Data Set should only serve to predict.))")
+    print("5 - Custom (Allows you to choose a custom Data Set. This Data Set should only serve to predict.)")
+    choice = input("Your choice : ")
 
-# Init the LabelEncoder() function in order to encode data
-label_encoder = LabelEncoder()
 
-# Convert categorical data into numerical data usable with the model
-financial_fraud_data['type'] = label_encoder.fit_transform(financial_fraud_data['type'])
-financial_fraud_data['nameOrig'] = label_encoder.fit_transform(financial_fraud_data['nameOrig'])
-financial_fraud_data['nameDest'] = label_encoder.fit_transform(financial_fraud_data['nameDest'])
-
-# Select the control data
-y = financial_fraud_data['isFraud']
-
-# Select the whole table apart from de the isFraud column
-X = financial_fraud_data.drop('isFraud', axis=1)
-
-# Separate the data
-train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+def function_choices():
+    print("What do you want to do ?")
+    print("1 - Train, predict and evaluate")
+    print("2 - Predict and evaluate only")
+    choice = input("Your choice : ")
 
 
 def model_choices():
@@ -58,20 +52,55 @@ def model_choices():
     choice = input("Your choice : ")
 
 
-def decision_tree_classifier_model():
+def files_configuration(data_set):
+    # Save filepath for easier access
+    file_path = 'data_set/' + data_set
+
+    # Read the data and save it into a DataFrame titled financial_fraud_data
+    file_data = pd.read_csv(file_path)
+
+    # Init the LabelEncoder() function in order to encode data
+    label_encoder = LabelEncoder()
+
+    # Convert categorical data into numerical data usable with the model
+    file_data['type'] = label_encoder.fit_transform(file_data['type'])
+    file_data['nameOrig'] = label_encoder.fit_transform(file_data['nameOrig'])
+    file_data['nameDest'] = label_encoder.fit_transform(file_data['nameDest'])
+
+    # Select the control data
+    y = file_data['isFraud']
+
+    # Select the whole table apart from de the isFraud column
+    X = file_data.drop('isFraud', axis=1)
+
+    # Separate the data
+    train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+    return train_X, train_y, val_X, val_y, X, y
+
+
+def decision_tree_classifier_model(training, train_X, train_y, val_X, val_y, X, y):
     # Define model. Specify a number for random_state to ensure same results each run
     financial_fraud_model = tree.DecisionTreeClassifier(random_state=1)
 
-    # Fit model
-    financial_fraud_model.fit(train_X, train_y)
+    if training:
+        # Fit model
+        financial_fraud_model.fit(train_X, train_y)
 
-    # Define the prediction
-    prediction = financial_fraud_model.predict(val_X)
+        # Define the prediction
+        prediction = financial_fraud_model.predict(val_X)
 
-    # Define the Mean Absolute Error
-    mae = mean_absolute_error(val_y, prediction)
-    # Print the Mean Absolute Error
-    print(mae)
+        # Define the Mean Absolute Error
+        mae = mean_absolute_error(val_y, prediction)
+        # Print the Mean Absolute Error
+        print(mae)
+    else:
+        # Define the prediction
+        prediction = financial_fraud_model.predict(X)
+
+        # Define the Mean Absolute Error
+        mae = mean_absolute_error(y, prediction)
+        # Print the Mean Absolute Error
+        print(mae)
 
 
 def generate_random_data(entry):
@@ -107,21 +136,50 @@ def main():
     while True:
         # Main menu
         print("Please choose something to do : ")
-        print("1 - Train Machine Learning algorithms and check precision")
-        print("2 - Predict with another Data Set (the Data Set should be inside the folder data_set and be a .csv")
-        print("3 - Create a new random Data Set")
-        print("4 - End script")
+        print("1 - Train Machine Learning algorithms, predict and check precision")
+        print("2 - Create a new random Data Set")
+        print("3 - End script")
         choice = input("Your choice : ")
         if choice == "1":
-            # Choosing the model to train
-            model_choices()
+            data_set_choices()
             if choice == "1":
-                decision_tree_classifier_model()
+                data_set = "financial_fraud.csv"
+                function_choices()
+                if choice == "1":
+                    train = True
+                    files_configuration(data_set)
+                    model_choices()
+                else:
+                    train = False
+                    files_configuration(data_set)
+                    model_choices()
+            elif choice == "2":
+                data_set = "financial_fraud_reduced.csv"
+                function_choices()
+                if choice == "1":
+                    train = True
+                    files_configuration(data_set)
+                    model_choices()
+                else:
+                    Train = False
+                    files_configuration(data_set)
+                    model_choices()
+            elif choice == "3":
+                data_set = "financial_fraud_incomplete.csv"
+                function_choices()
+                if choice == "1":
+                    Train = True
+                    files_configuration(data_set)
+                    model_choices()
+                else:
+                    Train = False
+                    files_configuration(data_set)
+                    model_choices()
+            elif choice == "4":
+                print("Work in progress")
+            elif choice == "5":
+                print("Work in progress")
         elif choice == "2":
-            # Choosing the Data Set to use
-            print("Please input the name of the Data Set (without file extension")
-            new_data_set = input("Your Data Set name : ") + ".csv"
-        elif choice == "3":
             # Choosing the number of entry for the new Data Set
             print("How much entry do you want ?")
             entry = int(input("Your choice : "))
@@ -144,5 +202,3 @@ def main():
 
 # Calling main function
 main()
-
-
