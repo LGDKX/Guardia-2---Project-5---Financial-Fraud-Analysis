@@ -15,7 +15,7 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
-from sklearn import tree
+from sklearn.linear_model import Ridge
 
 
 def data_set_choices():
@@ -35,24 +35,7 @@ def function_choices():
     choice = input("Your choice : ")
 
 
-def model_choices():
-    # Print the available choices
-    print("Which model do you want to use ?")
-    print("1 - Decision Tree Classifier")
-    print("2 -")
-    print("3 -")
-    print("4 -")
-    print("5 -")
-    print("6 -")
-    print("7 -")
-    print("8 -")
-    print("9 -")
-    print("10 - All of them")
-    # Input your choice
-    choice = input("Your choice : ")
-
-
-def files_configuration(data_set):
+def files_configuration(data_set, training):
     # Save filepath for easier access
     file_path = 'data_set/' + data_set
 
@@ -75,12 +58,71 @@ def files_configuration(data_set):
 
     # Separate the data
     train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
-    return train_X, train_y, val_X, val_y, X, y
+
+    # Print the available choices
+    print("Which model do you want to use ?")
+    print("1 - Linear Regression")
+    print("2 - Logistic Regression")
+    print("3 - Ridge Regression")
+    print("4 - Lasso Regression")
+    print("5 - Decision Tree")
+    print("6 - Random Forest")
+    print("7 - Gradient Boosting Regression")
+    print("8 - Extreme Gradient Boosting")
+    print("9 - LightGBM Regressor")
+    print("10 - KMeans")
+    print("11 - Hierarchical Clustering")
+    print("12 - Gaussian Process")
+    print("13 - APriori Algorithm ")
+    print("14 - All of them")
+    # Input your choice
+    choice = input("Your choice : ")
+
+    if choice == "1":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "2":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "3":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "4":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "5":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "6":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "7":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "8":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "9":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "10":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "11":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "12":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    elif choice == "13":
+        model(training, train_X, train_y, val_X, val_y, X, y)
+    else:
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
+        model(training, train_X, train_y, val_X, val_y, X, y)
 
 
-def decision_tree_classifier_model(training, train_X, train_y, val_X, val_y, X, y):
+def model(training, train_X, train_y, val_X, val_y, X, y):
     # Define model. Specify a number for random_state to ensure same results each run
-    financial_fraud_model = tree.DecisionTreeClassifier(random_state=1)
+    financial_fraud_model = (random_state=1)
 
     if training:
         # Fit model
@@ -146,35 +188,29 @@ def main():
                 data_set = "financial_fraud.csv"
                 function_choices()
                 if choice == "1":
-                    train = True
-                    files_configuration(data_set)
-                    model_choices()
+                    training = True
+                    files_configuration(data_set, training)
                 else:
-                    train = False
-                    files_configuration(data_set)
-                    model_choices()
+                    training = False
+                    files_configuration(data_set, training)
             elif choice == "2":
                 data_set = "financial_fraud_reduced.csv"
                 function_choices()
                 if choice == "1":
-                    train = True
-                    files_configuration(data_set)
-                    model_choices()
+                    training = True
+                    files_configuration(data_set, training)
                 else:
-                    Train = False
-                    files_configuration(data_set)
-                    model_choices()
+                    training = False
+                    files_configuration(data_set, training)
             elif choice == "3":
                 data_set = "financial_fraud_incomplete.csv"
                 function_choices()
                 if choice == "1":
-                    Train = True
-                    files_configuration(data_set)
-                    model_choices()
+                    training = True
+                    files_configuration(data_set, training)
                 else:
-                    Train = False
-                    files_configuration(data_set)
-                    model_choices()
+                    training = False
+                    files_configuration(data_set, training)
             elif choice == "4":
                 print("Work in progress")
             elif choice == "5":
