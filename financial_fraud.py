@@ -6,7 +6,7 @@
 #         Import train_test_split from Scikit Learn in order to break data sets         #
 #        Import MAE from Scikit Learn in order to assure the quality of the model       #
 #             Import LabelEncoder from Scikit Learn in order to encode data             #
-# Import DecisionTreeClassifier from Scikit Learn in order to manipulate Decision Tree  #
+#                            Import Machin Learning algorithm                           #
 #########################################################################################
 import pandas as pd
 import random
@@ -15,7 +15,14 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
-from sklearn import tree
+from sklearn.linear_model import LinearRegression, LogisticRegression, Ridge, Lasso
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from xgboost import XGBRegressor
+from lightgbm import LGBMRegressor
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.gaussian_process import GaussianProcessClassifier
+
 
 
 def data_set_choices():
@@ -39,7 +46,7 @@ def files_configuration(data_set, training):
     # Save filepath for easier access
     file_path = 'data_set/' + data_set
 
-    # Read the data and save it into a DataFrame titled financial_fraud_data
+    # Read the data and save it into a DataFrame titled file_data
     file_data = pd.read_csv(file_path)
 
     # Init the LabelEncoder() function in order to encode data
@@ -73,75 +80,131 @@ def files_configuration(data_set, training):
     print("10 - KMeans")
     print("11 - Hierarchical Clustering")
     print("12 - Gaussian Process")
-    print("13 - APriori Algorithm ")
+    print("13 - APriori Algorithm")
     print("14 - All of them")
-    # Input your choice
-    choice = input("Your choice : ")
+    print("15 - Do something else")
 
-    if choice == "1":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "2":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "3":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "4":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "5":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "6":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "7":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "8":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "9":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "10":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "11":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "12":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    elif choice == "13":
-        model(training, train_X, train_y, val_X, val_y, X, y)
-    else:
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
-        model(training, train_X, train_y, val_X, val_y, X, y)
+    while True:
+        # Input your choice
+        choice = input("Your choice : ")
+        if choice == "1":
+            linear_regression_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "2":
+            logistic_regression_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "3":
+            ridge_regression_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "4":
+            lasso_regression_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "5":
+            decision_tree_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "6":
+            random_forest_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "7":
+            gradient_boosting_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "8":
+            xgboost_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "9":
+            lightgbm_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "10":
+            kmeans_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "11":
+            hierarchical_clustering_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "12":
+            gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y)
+        elif choice == "13":
+            print("Fuck")
+        elif choice == "14":
+            models = [
+                linear_regression_model,
+                logistic_regression_model,
+                ridge_regression_model,
+                lasso_regression_model,
+                decision_tree_model,
+                random_forest_model,
+                gradient_boosting_model,
+                xgboost_model,
+                lightgbm_model,
+                kmeans_model,
+                hierarchical_clustering_model,
+                gaussian_process_model,
+            ]
+            for model_func in models:
+                model_func(training, train_X, train_y, val_X, val_y, X, y)
+        else:
+            break
 
 
-def model(training, train_X, train_y, val_X, val_y, X, y):
-    # Define model. Specify a number for random_state to ensure same results each run
-    financial_fraud_model = tree.DecisionTreeClassifier(random_state=1)
+def linear_regression_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = LinearRegression()
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
+
+def logistic_regression_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = LogisticRegression()
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def ridge_regression_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = Ridge()
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def lasso_regression_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = Lasso()
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def decision_tree_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = DecisionTreeClassifier(random_state=1)
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def random_forest_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = RandomForestClassifier(random_state=1)
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def gradient_boosting_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = GradientBoostingClassifier(random_state=1)
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def xgboost_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = XGBRegressor(random_state=1)
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def lightgbm_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = LGBMRegressor(random_state=1)
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def kmeans_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = KMeans(n_clusters=2, random_state=1, n_init="auto")
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def hierarchical_clustering_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = AgglomerativeClustering()
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+
+def gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y):
+    model = GaussianProcessClassifier(random_state=1)
+    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
+
+# Helper function to fit, predict, and print Mean Absolute Error
+
+
+def fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y):
     if training:
-        # Fit model
-        financial_fraud_model.fit(train_X, train_y)
-
-        # Define the prediction
-        prediction = financial_fraud_model.predict(val_X)
-
-        # Define the Mean Absolute Error
+        model.fit(train_X, train_y)
+        prediction = model.predict(val_X)
         mae = mean_absolute_error(val_y, prediction)
-        # Print the Mean Absolute Error
         print(mae)
     else:
-        # Define the prediction
-        prediction = financial_fraud_model.predict(X)
-
-        # Define the Mean Absolute Error
+        prediction = model.predict(X)
         mae = mean_absolute_error(y, prediction)
-        # Print the Mean Absolute Error
         print(mae)
 
 
@@ -212,9 +275,13 @@ def main():
                     training = False
                     files_configuration(data_set, training)
             elif choice == "4":
-                print("Work in progress")
+                data_set = "random_data.csv"
+                training = False
+                files_configuration(data_set, training)
             elif choice == "5":
-                print("Work in progress")
+                data_set = input("Please enter the name of your Data Set : ")
+                training = False
+                files_configuration(data_set, training)
         elif choice == "2":
             # Choosing the number of entry for the new Data Set
             print("How much entry do you want ?")
