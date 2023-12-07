@@ -3,6 +3,7 @@
 #                     Import random in order to generate random data                    #
 #                   Import string in order to manipulate data strings                   #
 #                  Import os in order to save files in another folder                   #
+#                          Import time in order to set a timer                          #
 #         Import train_test_split from Scikit Learn in order to break data sets         #
 #        Import MAE from Scikit Learn in order to assure the quality of the model       #
 #             Import LabelEncoder from Scikit Learn in order to encode data             #
@@ -12,6 +13,7 @@ import pandas as pd
 import random
 import string
 import os
+import time
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
@@ -22,8 +24,6 @@ from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
 from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.gaussian_process.kernels import RBF
-
 
 def data_set_choices():
     print("Which Data Set do you wish to use ?")
@@ -43,6 +43,9 @@ def function_choices():
 
 
 def files_configuration(data_set, training):
+    # Begin the timer
+    config_begin = time.time()
+
     # Save filepath for easier access
     file_path = 'data_set/' + data_set
 
@@ -57,6 +60,8 @@ def files_configuration(data_set, training):
     file_data['nameOrig'] = label_encoder.fit_transform(file_data['nameOrig'])
     file_data['nameDest'] = label_encoder.fit_transform(file_data['nameDest'])
 
+    file_data = file_data.fillna(file_data.mean())
+
     # Select the control data
     y = file_data['isFraud']
 
@@ -65,6 +70,13 @@ def files_configuration(data_set, training):
 
     # Separate the data
     train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+
+    # End the timer
+    config_end = time.time()
+
+    # Calculate and display the total time
+    config_time = config_end - config_begin
+    print(config_time)
 
     # Print the available choices
     print("Which model do you want to use ?")
@@ -112,7 +124,7 @@ def files_configuration(data_set, training):
         elif choice == "12":
             gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y)
         elif choice == "13":
-            print("Fuck")
+            apriori_model(training, train_X, train_y, val_X, val_y, X, y)
         elif choice == "14":
             models = [
                 linear_regression_model,
@@ -193,8 +205,6 @@ def gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y):
     kernel = 1.0 * RBF(1.0)
     model = GaussianProcessClassifier(kernel=kernel, random_state=1)
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
-
-# Helper function to fit, predict, and print Mean Absolute Error
 
 
 def fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y):
