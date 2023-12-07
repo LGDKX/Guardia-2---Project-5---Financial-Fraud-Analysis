@@ -22,7 +22,7 @@ from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
 from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.gaussian_process import GaussianProcessClassifier
-
+from sklearn.gaussian_process.kernels import RBF
 
 
 def data_set_choices():
@@ -160,12 +160,12 @@ def decision_tree_model(training, train_X, train_y, val_X, val_y, X, y):
 
 
 def random_forest_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = RandomForestClassifier(random_state=1)
+    model = RandomForestClassifier(n_estimators=100, random_state=1)
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 
 def gradient_boosting_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = GradientBoostingClassifier(random_state=1)
+    model = GradientBoostingClassifier(n_estimators=100, random_state=1)
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 
@@ -190,7 +190,8 @@ def hierarchical_clustering_model(training, train_X, train_y, val_X, val_y, X, y
 
 
 def gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = GaussianProcessClassifier(random_state=1)
+    kernel = 1.0 * RBF(1.0)
+    model = GaussianProcessClassifier(kernel=kernel, random_state=1)
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 # Helper function to fit, predict, and print Mean Absolute Error
