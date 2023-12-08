@@ -22,8 +22,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
-from sklearn.cluster import KMeans, AgglomerativeClustering
-from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.cluster import KMeans
 
 def data_set_choices():
     print("Which Data Set do you wish to use ?")
