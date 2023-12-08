@@ -24,6 +24,7 @@ from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
 from sklearn.cluster import KMeans
 
+
 def data_set_choices():
     print("Which Data Set do you wish to use ?")
     print("1 - financial_fraud (The complete Data Set.)")
