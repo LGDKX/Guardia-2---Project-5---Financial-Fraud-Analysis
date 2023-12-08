@@ -33,6 +33,7 @@ def data_set_choices():
     print("4 - random_data (A previously randomly generated Data Set. This Data Set should only serve to predict.))")
     print("5 - Custom (Allows you to choose a custom Data Set. This Data Set should only serve to predict.)")
     choice = input("Your choice : ")
+    return choice
 
 
 def function_choices():
@@ -40,6 +41,7 @@ def function_choices():
     print("1 - Train, predict and evaluate")
     print("2 - Predict and evaluate only")
     choice = input("Your choice : ")
+    return choice
 
 
 def files_configuration(data_set, training):
@@ -146,7 +148,7 @@ def logistic_regression_model(training, train_X, train_y, val_X, val_y, X, y):
 
 
 def ridge_regression_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = Ridge(solver ='sag')
+    model = Ridge(solver='sag')
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 
@@ -192,7 +194,7 @@ def fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y):
         model.fit(train_X, train_y)
         prediction = model.predict(val_X)
         mae = mean_absolute_error(val_y, prediction)
-        print("Mean Abosulte Error : ", mae)
+        print("Mean Absolute Error : ", mae)
 
         # End the timer
         training_end = time.time()
