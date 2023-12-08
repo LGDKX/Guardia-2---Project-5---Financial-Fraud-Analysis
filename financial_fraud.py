@@ -76,7 +76,7 @@ def files_configuration(data_set, training):
 
     # Calculate and display the total time
     config_time = config_end - config_begin
-    print(config_time)
+    print("Configuration time : ", config_time)
 
     # Print the available choices
     print("Which model do you want to use ?")
@@ -90,11 +90,8 @@ def files_configuration(data_set, training):
     print("8 - Extreme Gradient Boosting")
     print("9 - LightGBM Regressor")
     print("10 - KMeans")
-    print("11 - Hierarchical Clustering")
-    print("12 - Gaussian Process")
-    print("13 - APriori Algorithm")
-    print("14 - All of them")
-    print("15 - Do something else")
+    print("11 - All of them")
+    print("12 - Do something else")
 
     while True:
         # Input your choice
@@ -120,12 +117,6 @@ def files_configuration(data_set, training):
         elif choice == "10":
             kmeans_model(training, train_X, train_y, val_X, val_y, X, y)
         elif choice == "11":
-            hierarchical_clustering_model(training, train_X, train_y, val_X, val_y, X, y)
-        elif choice == "12":
-            gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y)
-        elif choice == "13":
-            apriori_model(training, train_X, train_y, val_X, val_y, X, y)
-        elif choice == "14":
             models = [
                 linear_regression_model,
                 logistic_regression_model,
@@ -137,8 +128,6 @@ def files_configuration(data_set, training):
                 xgboost_model,
                 lightgbm_model,
                 kmeans_model,
-                hierarchical_clustering_model,
-                gaussian_process_model,
             ]
             for model_func in models:
                 model_func(training, train_X, train_y, val_X, val_y, X, y)
@@ -157,12 +146,12 @@ def logistic_regression_model(training, train_X, train_y, val_X, val_y, X, y):
 
 
 def ridge_regression_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = Ridge()
+    model = Ridge(solver ='sag')
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 
 def lasso_regression_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = Lasso()
+    model = Lasso(max_iter=10000)
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 
@@ -196,23 +185,22 @@ def kmeans_model(training, train_X, train_y, val_X, val_y, X, y):
     fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
 
 
-def hierarchical_clustering_model(training, train_X, train_y, val_X, val_y, X, y):
-    model = AgglomerativeClustering()
-    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
-
-
-def gaussian_process_model(training, train_X, train_y, val_X, val_y, X, y):
-    kernel = 1.0 * RBF(1.0)
-    model = GaussianProcessClassifier(kernel=kernel, random_state=1)
-    fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y)
-
-
 def fit_predict_print(model, training, train_X, train_y, val_X, val_y, X, y):
     if training:
+        # Begin the timer
+        training_begin = time.time()
         model.fit(train_X, train_y)
         prediction = model.predict(val_X)
         mae = mean_absolute_error(val_y, prediction)
-        print(mae)
+        print("Mean Abosulte Error : ", mae)
+
+        # End the timer
+        training_end = time.time()
+
+        # Calculate and display the total time
+        training_time = training_end - training_begin
+
+        print("Training time: ", training_time)
     else:
         prediction = model.predict(X)
         mae = mean_absolute_error(y, prediction)
