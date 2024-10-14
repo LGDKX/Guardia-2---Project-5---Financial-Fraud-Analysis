@@ -1,4 +1,4 @@
-# Guardia-2---Project-5---Financial-Fraud-Analysis
+# Guardia 2 - Project-5 - Analyse de Fraude Finanicère
 
 Ce projet a pour objectif d'entraîner un algorithme d'apprentissage automatique à reconnaître la fraude financière.
 Pour ce faire, nous utilisons Scikit Learn.
@@ -14,7 +14,7 @@ pip install pandas
 
 pip install -U scikit-learn
 
-# Guardia-2---Project-5---Financial-Fraud-Analysis
+# Guardia 2 - Project-5 - Financial Fraud Analysis
 
 This project aims to train a Machine Learning Algorithm to recognize financial fraud. 
 In order to do this we use Scikit Learn. 
